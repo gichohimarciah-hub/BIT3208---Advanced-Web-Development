@@ -1,0 +1,66 @@
+<%- include('partials/header') %>
+
+<div class="dashboard">
+  <div class="dash-header">
+    <h2>Welcome back, <%= user.name %>! 👋</h2>
+    <span class="role-badge <%= user.role %>"><%= user.role %></span>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3><%= orders.length %></h3>
+      <p>Your Orders</p>
+    </div>
+    <div class="stat-card">
+      <h3><%= products.length %></h3>
+      <p>Products Available</p>
+    </div>
+    <div class="stat-card">
+      <h3><%= user.email %></h3>
+      <p>Account Email</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-header">
+      <h3>Featured Products</h3>
+      <a href="/products" class="btn-primary small">Browse All</a>
+    </div>
+    <div class="product-grid small">
+      <% products.forEach(p => { %>
+        <div class="product-card">
+          <div class="product-icon">📦</div>
+          <h4><%= p.name %></h4>
+          <p class="product-price">KES <%= Number(p.price).toLocaleString() %></p>
+          <a href="/products/<%= p.id %>" class="btn-primary small">View</a>
+        </div>
+      <% }) %>
+    </div>
+  </section>
+
+  <section class="section">
+    <h3>Your Recent Orders</h3>
+    <% if (orders.length === 0) { %>
+      <p class="empty-msg">No orders yet. <a href="/products">Start shopping!</a></p>
+    <% } else { %>
+      <table class="data-table">
+        <thead>
+          <tr><th>Order #</th><th>Items</th><th>Total</th><th>Status</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+          <% orders.forEach(o => { %>
+            <tr>
+              <td>#<%= o.id %></td>
+              <td><%= o.item_count %></td>
+              <td>KES <%= Number(o.total).toLocaleString() %></td>
+              <td><span class="status-badge <%= o.status %>"><%= o.status %></span></td>
+              <td><%= new Date(o.created_at).toLocaleDateString() %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+  </section>
+</div>
+
+<%- include('partials/footer') %>

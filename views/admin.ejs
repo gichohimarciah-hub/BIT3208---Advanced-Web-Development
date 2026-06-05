@@ -1,0 +1,106 @@
+<%- include('partials/header') %>
+
+<div class="dashboard">
+  <div class="dash-header">
+    <h2>🔧 Admin Panel</h2>
+    <span class="role-badge admin">admin</span>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card blue">
+      <h3><%= products.length %></h3>
+      <p>Total Products</p>
+    </div>
+    <div class="stat-card green">
+      <h3><%= users.length %></h3>
+      <p>Registered Users</p>
+    </div>
+    <div class="stat-card orange">
+      <h3><%= orders.length %></h3>
+      <p>Total Orders</p>
+    </div>
+    <div class="stat-card purple">
+      <h3>KES <%= Number(revenue).toLocaleString() %></h3>
+      <p>Total Revenue</p>
+    </div>
+  </div>
+
+  <!-- Products Management -->
+  <section class="section">
+    <div class="section-header">
+      <h3>Products</h3>
+      <a href="/products/admin/new" class="btn-primary small">+ Add Product</a>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>Category</th><th>Price (KES)</th><th>Stock</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <% products.forEach(p => { %>
+          <tr>
+            <td>#<%= p.id %></td>
+            <td><%= p.name %></td>
+            <td><%= p.category %></td>
+            <td><%= Number(p.price).toLocaleString() %></td>
+            <td><%= p.stock %></td>
+            <td class="actions">
+              <a href="/products/admin/edit/<%= p.id %>" class="btn-edit">Edit</a>
+              <form action="/products/admin/delete/<%= p.id %>" method="POST" style="display:inline"
+                    onsubmit="return confirm('Delete <%= p.name %>?')">
+                <button type="submit" class="btn-delete">Delete</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Users Table -->
+  <section class="section">
+    <h3>Registered Users</h3>
+    <table class="data-table">
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Joined</th></tr>
+      </thead>
+      <tbody>
+        <% users.forEach(u => { %>
+          <tr>
+            <td>#<%= u.id %></td>
+            <td><%= u.name %></td>
+            <td><%= u.email %></td>
+            <td><span class="role-badge <%= u.role %>"><%= u.role %></span></td>
+            <td><%= new Date(u.created_at).toLocaleDateString() %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Orders Table -->
+  <section class="section">
+    <h3>All Orders</h3>
+    <% if (orders.length === 0) { %>
+      <p class="empty-msg">No orders yet.</p>
+    <% } else { %>
+      <table class="data-table">
+        <thead>
+          <tr><th>Order #</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+          <% orders.forEach(o => { %>
+            <tr>
+              <td>#<%= o.id %></td>
+              <td><%= o.customer %></td>
+              <td>KES <%= Number(o.total).toLocaleString() %></td>
+              <td><span class="status-badge <%= o.status %>"><%= o.status %></span></td>
+              <td><%= new Date(o.created_at).toLocaleDateString() %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+  </section>
+</div>
+
+<%- include('partials/footer') %>

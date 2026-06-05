@@ -1,0 +1,38 @@
+<%- include('../partials/header') %>
+
+<div class="auth-box wide">
+  <h2><%= product ? 'Edit Product' : 'Add New Product' %></h2>
+
+  <% if (error) { %>
+    <div class="alert alert-error"><%= error %></div>
+  <% } %>
+
+  <form action="<%= product ? '/products/admin/update/' + product.id : '/products/admin/create' %>" method="POST" id="productForm">
+    <div class="form-group">
+      <label>Product Name *</label>
+      <input type="text" name="name" value="<%= product ? product.name : '' %>" placeholder="e.g. HP Laptop" required />
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea name="description" rows="3" placeholder="Short product description..."><%= product ? product.description : '' %></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Price (KES) *</label>
+        <input type="number" name="price" step="0.01" value="<%= product ? product.price : '' %>" placeholder="0.00" required />
+      </div>
+      <div class="form-group">
+        <label>Stock Quantity</label>
+        <input type="number" name="stock" value="<%= product ? product.stock : 0 %>" min="0" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Category</label>
+      <input type="text" name="category" value="<%= product ? product.category : '' %>" placeholder="e.g. Electronics" />
+    </div>
+    <button type="submit" class="btn-primary full"><%= product ? 'Update Product' : 'Add Product' %></button>
+    <a href="/admin" class="btn-secondary full" style="margin-top:8px;">Cancel</a>
+  </form>
+</div>
+
+<%- include('../partials/footer') %>

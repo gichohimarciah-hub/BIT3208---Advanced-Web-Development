@@ -1,0 +1,27 @@
+<!-- views/partials/header.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartShop – BIT3208</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="/" class="brand">🛍️ SmartShop</a>
+  <div class="nav-links">
+    <a href="/products">Products</a>
+    <% if (locals.user) { %>
+      <a href="/dashboard">Dashboard</a>
+      <% if (locals.user.role === 'admin') { %><a href="/admin">Admin</a><% } %>
+      <a href="/auth/logout" class="btn-logout">Logout (<%= locals.user.name %>)</a>
+    <% } else { %>
+      <a href="/auth/login">Login</a>
+      <a href="/auth/register" class="btn-register">Register</a>
+    <% } %>
+  </div>
+</nav>
+
+<main class="container">

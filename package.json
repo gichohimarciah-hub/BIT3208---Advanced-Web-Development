@@ -1,0 +1,21 @@
+{
+  "name": "smartshop",
+  "version": "1.0.0",
+  "description": "BIT3208 Capstone – Smart E-Commerce Web App (Node.js + MySQL)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "mysql2": "^3.9.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
+  }
+}

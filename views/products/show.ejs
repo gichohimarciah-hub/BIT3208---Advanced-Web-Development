@@ -1,0 +1,28 @@
+<%- include('../partials/header') %>
+
+<div class="product-detail">
+  <a href="/products" class="back-link">← Back to Products</a>
+  <div class="detail-card">
+    <div class="detail-icon">📦</div>
+    <div class="detail-info">
+      <span class="badge"><%= product.category %></span>
+      <h2><%= product.name %></h2>
+      <p class="product-desc"><%= product.description %></p>
+      <p class="product-price large">KES <%= Number(product.price).toLocaleString() %></p>
+      <p class="stock-info">
+        <% if (product.stock > 0) { %>
+          ✅ In Stock (<%= product.stock %> available)
+        <% } else { %>
+          ❌ Out of Stock
+        <% } %>
+      </p>
+      <% if (!locals.user) { %>
+        <a href="/auth/login" class="btn-primary">Login to Order</a>
+      <% } else { %>
+        <button class="btn-primary" onclick="alert('Order feature coming in Week 5!')">Add to Order</button>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

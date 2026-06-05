@@ -1,0 +1,50 @@
+<%- include('../partials/header') %>
+
+<div class="auth-box">
+  <h2>Login to SmartShop</h2>
+
+  <% if (error) { %>
+    <div class="alert alert-error"><%= error %></div>
+  <% } %>
+
+  <form action="/auth/login" method="POST" id="loginForm">
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" name="email" placeholder="you@example.com" required />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" name="password" id="password" placeholder="Enter password" required />
+      <small id="pwMsg" class="form-hint"></small>
+    </div>
+    <button type="submit" class="btn-primary full">Login</button>
+  </form>
+
+  <p class="auth-link">No account? <a href="/auth/register">Register here</a></p>
+</div>
+
+<script>
+  // JS form validation (Week 3 requirement)
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    const pw = document.getElementById('password').value;
+    const msg = document.getElementById('pwMsg');
+    if (pw.length < 6) {
+      msg.textContent = '⚠️ Password must be at least 6 characters.';
+      msg.style.color = '#e74c3c';
+      e.preventDefault();
+    } else {
+      msg.textContent = '';
+    }
+  });
+
+  document.getElementById('password').addEventListener('input', function() {
+    const val = this.value;
+    const msg = document.getElementById('pwMsg');
+    if (val.length === 0)       { msg.textContent = ''; }
+    else if (val.length < 6)    { msg.textContent = '🔴 Too short'; msg.style.color = '#e74c3c'; }
+    else if (val.length < 10)   { msg.textContent = '🟡 Acceptable'; msg.style.color = '#f39c12'; }
+    else                        { msg.textContent = '🟢 Strong'; msg.style.color = '#27ae60'; }
+  });
+</script>
+
+<%- include('../partials/footer') %>
