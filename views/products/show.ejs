@@ -3,7 +3,12 @@
 <div class="product-detail">
   <a href="/products" class="back-link">← Back to Products</a>
   <div class="detail-card">
-    <div class="detail-icon">📦</div>
+
+    <% if (product.image_url) { %>
+  <img src="<%= product.image_url %>" alt="<%= product.name %>" style="width:100%;max-width:300px;border-radius:10px;" />
+<% } else { %>
+  <div class="detail-icon">🛍️</div>
+<% } %>
     <div class="detail-info">
       <span class="badge"><%= product.category %></span>
       <h2><%= product.name %></h2>

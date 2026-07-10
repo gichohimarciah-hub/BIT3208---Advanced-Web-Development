@@ -72,14 +72,14 @@ router.get('/admin/new', requireAdmin, (req, res) => {
 
 // ── POST /products/admin/create ───────────────────────────────
 router.post('/admin/create', requireAdmin, async (req, res) => {
-  const { name, description, price, stock, category } = req.body;
+  const { name, description, price, stock, category, image_url } = req.body;
   if (!name || !price) {
     return res.render('products/form', { product: null, error: 'Name and price are required.', user: req.session.user });
   }
   try {
     await db.query(
-      'INSERT INTO products (name, description, price, stock, category) VALUES (?, ?, ?, ?, ?)',
-      [name, description, price, stock || 0, category]
+      'INSERT INTO products (name, description, price, stock, category, image_url) VALUES (?, ?, ?, ?, ?, ?)',
+      [name, description, price, stock, category, image_url]
     );
     res.redirect('/admin');
   } catch (err) {
@@ -96,11 +96,11 @@ router.get('/admin/edit/:id', requireAdmin, async (req, res) => {
 
 // ── POST /products/admin/update/:id ──────────────────────────
 router.post('/admin/update/:id', requireAdmin, async (req, res) => {
-  const { name, description, price, stock, category } = req.body;
+  const { name, description, price, stock, category, image_url } = req.body;
   try {
     await db.query(
-      'UPDATE products SET name=?, description=?, price=?, stock=?, category=? WHERE id=?',
-      [name, description, price, stock, category, req.params.id]
+      'UPDATE products SET name=?, description=?, price=?, stock=?, category=?, image_url=? WHERE id=?',
+      [name, description, price, stock, category, image_url, req.params.id]
     );
     res.redirect('/admin');
   } catch (err) {
